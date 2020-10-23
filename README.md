@@ -9,8 +9,8 @@
 
 ## 가이드를 따라가는데 필요한 개발 환경
 
-- Ruby
+- Ruby(2.5.0+)
 - SQLite3
-- Node.js
+- Node.js(8.16.0+)
 - Yarn
 
