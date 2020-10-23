@@ -67,6 +67,27 @@ View의 목적은 사람이 읽을 수 있는 형식으로 정보를 보여주�
 
 `root 'welcome#index'` 를 마지막 줄(`end` 윗부분)에 추가해줍니다.
 
+## Rails로 간단한 REST 기능 구현하기
+
+`config/routes.rb` 파일에 다음과 같이 작성합니다.
+
+```ruby
+Rails.application.routes.draw do
+  get 'welcome/index'
+ 
+  resources :articles
+ 
+  root 'welcome#index'
+end
+
+```
+
+`resources` 는 표준 REST resource를 정의하는 메서드입니다.
+
+`rails routes` 를 입력해봅시다. 입력하면 이미 정의된 모든 표준 RESTful action들에 대한 route들을 볼 수 있습니다.
+
+우리가 입력한건 `articles` 인데, 단수형태인 `article` 이라는 단어가 의미있게 사용됨을 알 수 있습니다.
+
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
