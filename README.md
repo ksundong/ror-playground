@@ -37,6 +37,36 @@ export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
 echo 'export PATH="'$(gem env gemdir)'/bin:$PATH"' >> ~/.zshrc
 ```
 
+## Rails blog 애플리케이션 만들기
+
+`rails new blog` 로 생성할 수 있습니다.
+
+`cd blog` 로 생성된 애플리케이션을 확인할 수 있습니다.
+
+default로 git이 자동으로 초기화 되어있습니다. 
+
+## Rails 서버 구동하기
+
+`rails server` 명령어로 실행합니다.
+
+개발 모드에서는 서버를 재시작할 필요없이 변경된 파일이 자동으로 선택됩니다.
+
+## Rails로 간단한 Controller와 View 구성하기
+
+`rails generate controller Welcome index`
+
+Controller의 목적은 특정한 요청을 받아주는 것이고, Router가 요청을 어떤 컨트롤러에게 전달할지 결정합니다.
+
+같은 요청이지만 다른 actions로 요청이 처리될 수 있고, 각 actions의 목적은 정보를 수집(?)해서 view에 제공해주는 것입니다.
+
+View의 목적은 사람이 읽을 수 있는 형식으로 정보를 보여주는 것입니다. View에서 정보가 수집되는 것이 아니라, Controller에서 수집된다는 것이 중요한 점입니다. 뷰에는 단순히 해당 정보만 표시되어야 합니다. 기본적으로, 뷰 템플릿은 eRuby라는 언어로 작성되고, eRuby는 사용자에게 전송되기 전에 Rails의 요청 사이클에 의해 처리됩니다.(`.erb`)
+
+## Rails 루트 URL 지정하기
+
+텍스트 에디터로 `config/routes.rb` 파일을 수정합니다.
+
+`root 'welcome#index'` 를 마지막 줄(`end` 윗부분)에 추가해줍니다.
+
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
