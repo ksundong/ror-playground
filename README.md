@@ -15,3 +15,7 @@
 - Node.js(8.16.0+)
 - Yarn
 
+## References
+
+[Convention over Configuration wikipedia](https://en.wikipedia.org/wiki/Convention_over_configuration)
+
