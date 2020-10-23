@@ -15,6 +15,27 @@
 - Node.js(8.16.0+)
 - Yarn
 
+## Rails 설치하기 / Mac에서 오류 발생시 대처법
+
+`gem install rails` 로 설치합니다.
+
+### Mac에서 발생한 문제
+
+이상하게 자꾸 rails가 설치되지 않았습니다. 인터넷의 솔루션들을 봐도 동작하지 않는 문제가 있었습니다. (내 시간...)
+
+그 이유는 Mac에 default로 설치된 ruby를 이용해 설치하려고 했기 때문이었습니다.
+
+`brew link --overwrite ruby` 를 입력했고, 혹시 몰라서 아래의 것들도 입력해주었습니다. 저는 zsh을 사용중입니다.
+
+일단 link overwrite만 적용해보시고 안된다면 아래의 것을 입력해보시기 바랍니다.
+
+```shell
+echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.zshrc
+export LDFLAGS="-L/usr/local/opt/ruby/lib"
+export CPPFLAGS="-I/usr/local/opt/ruby/include"
+export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
+```
+
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
