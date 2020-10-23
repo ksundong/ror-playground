@@ -70,5 +70,6 @@ View의 목적은 사람이 읽을 수 있는 형식으로 정보를 보여주�
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
+
 [Convention over Configuration wikipedia](https://en.wikipedia.org/wiki/Convention_over_configuration)
 
