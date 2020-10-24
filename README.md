@@ -191,6 +191,12 @@ Rails는 `articles/new` 라는 템플릿을 `app/views` 에서 찾게됩니다. 
 
 > 원래 `form_with` 는 Ajax를 사용해서 전체페이지 리디렉션을 생략합니다. 이 가이드를 쉽게 만들기 위해 `local: true` 옵션으로 비활성화 했습니다.
 
+## 이런 관례는 좋아보인다.
+
+> A frequent practice is to place the standard CRUD actions in each controller in the following order: `index`, `show`, `new`, `edit`, `create`, `update` and `destroy`. You may use any order you choose, but keep in mind that these are public methods; as mentioned earlier in this guide, they must be placed before declaring `private` visibility in the controller.
+
+소스코드 파악하는 속도도 좀 더 빨라질 수 있을 것 같다.
+
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
