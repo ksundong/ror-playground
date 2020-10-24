@@ -143,6 +143,54 @@ Rails는 `articles/new` 라는 템플릿을 `app/views` 에서 찾게됩니다. 
 
 루트, 컨트롤러, 액션, 뷰가 이제 조화롭게 동작합니다! 이제 새로운 기사를 작성하기 위한 폼을 만들어야 할 때입니다.
 
+### 첫번째 폼
+
+이 템플릿으로 폼을 만들기 위해선, 폼 빌더를 사용해야 합니다. Rails에서 폼 빌더를 사용하는 첫번째 방법은 `form_with` 라는 헬퍼 메서드를 사용하는 것입니다. 이 메서드를 사용하기 위해서 다음의 코드를 `app/views/articles/new.html.erb` 에 추가하세요.
+
+```erb
+<%= form_with scope: :article, local: true do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
+  </p>
+ 
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+```
+
+새로고침 하면 됩니다. 참 쉽죠?
+
+`form_with` 메서드를 호출하면, 이 폼을 특정하기 위한 스코프를 입력해줍니다. 여기선 `:article` 이라는 스코프를 주었어요. 이렇게 지정하면 `form_with` 헬퍼에 이 폼이 어떤 용도로 사용되는지 말해줄 수 있습니다.
+
+이 메서드의 블럭 안에는 `FormBuilder` 오브젝트가 `form` 으로 표현되어 있습니다. 이 오브젝트는 두 개의 라벨과, 두개의 텍스트 필드 그리고 `submit` 버튼으로 이루어져 있습니다.
+
+이 폼에는 하나의 문제점이 있습니다. 생성된 HTML 페이지의 소스를 확인해보면, `action` 속성이 `/articles/new` 를 가리키고 있음을 볼 수 있습니다. 이 경로는 바로 지금 있는 페이지로 이동하고, 해당 경로는 새 기사의 폼을 표시하는데만 사용되어야 하기 때문에 문제가 됩니다.
+
+이 폼은 다른 곳으로 가기 위해서 다른 URL을 필요로 합니다. 이것은 간단하게 `form_with` 의 `:url` 옵션을 지정하는 것으로 됩니다. 일반적으로 Rails에서 새로운 폼을 제출하는 액션을 "create" 라고 하며, 폼은 그 action을 가리켜야 합니다.
+
+`form_with` 라인을 다음과 같이 수정하세요.
+
+```erb
+<%= form_with scope: :article, url: articles_path, local: true do |form| %>
+```
+
+이 예제에서, `articles_path` 헬퍼는 `:url` 옵션으로 전달됩니다. Rails가 이것으로 무엇을 하는지 보기 위해서, `rails routes` 의 출력을 다시 봅시다.
+
+`articles_path` 헬퍼는 Rails에게 articles 접두사와 관련된 URI 패턴을 가리키도록 알려주고, 폼은 기본적으로 해당 경로로 `POST` 요청을 전송하도록 합니다. 이는 현재 컨트롤러인 `ArticlesController` 의 `create` 액션과 관련이 있습니다.
+
+폼과 이와 연관된 경로가 정의되었다면, 폼을 채우고, submit 버튼을 눌러 새로운 기사 생성 프로세스를 시작할 수 있습니다. 한 번 해보세요. 폼을 제출하면 익숙한 에러를 볼 수 있을겁니다.
+
+이제 `create` 액션을 `ArticlesController` 에 생성하는 것이 동작하도록 만드는 방법이겠죠?
+
+> 원래 `form_with` 는 Ajax를 사용해서 전체페이지 리디렉션을 생략합니다. 이 가이드를 쉽게 만들기 위해 `local: true` 옵션으로 비활성화 했습니다.
+
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
