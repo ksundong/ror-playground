@@ -88,6 +88,61 @@ end
 
 우리가 입력한건 `articles` 인데, 단수형태인 `article` 이라는 단어가 의미있게 사용됨을 알 수 있습니다.
 
+## Rails로 글 작성과 조회 기능 구현하기
+
+### 기초작업
+
+먼저, 우리는 글 작성 화면을 만들고자합니다. 주소는 `/articles/new` 가 좋겠네요.
+
+하지만 해당 주소로 접속하면, 라우팅 에러 페이지가 출력됩니다. 루트는 요청에 대해 서빙하기 위해서 컨트롤러가 필요합니다. 이 문제를 해결하는 방법은 간단합니다. `ArticlesController` 를 생성해주면 됩니다.
+
+```shell
+$ rails generate controller Articles
+```
+
+그리고 텍스트 편집기로 `app/controllers/articles_controller.rb` 를 열면 비어있는 컨트롤러를 확인하실 수 있습니다.
+
+이 컨트롤러는 `ApplicationController` 를 상속합니다. 이 컨트롤러에 메서드를 정의해 액션을 만들어줄 수 있습니다.
+
+참고로 컨트롤러는 `public` 이어야 합니다.
+
+---
+
+이제 다시 접속해보면 action을 찾을 수 없다는 오류가 나옵니다.
+
+직접 컨트롤러에 액션을 정의해주려면 `new` 라는 메서드를 컨트롤러에 정의해주면 됩니다.
+
+```ruby
+class ArticlesController < ApplicationController
+  def new
+  end
+end
+```
+
+이제 새로고침 해보면, 다른 에러가 나옵니다. 바로 요청에 대한 view를 가질 것으로 Rails가 동작하는데 해당하는 view가 없기 때문에 생기는 오류입니다.
+
+에러 메시지를 읽어보면 `articles/new` 템플릿이 없기 때문에 발생함을 알수 있습니다. API로 동작하는 경우에 `204(No Content)` 응답인 경우엔 템플릿을 필요로 하지 않음을 알 수 있습니다.
+
+레일즈는 `articles/new` 를 먼저 탐색합니다. 그 다음 `application/new` 를 탐색합니다. 왜일까요? `ArticlesController` 가  `ApplicationController` 를 상속하기 때문입니다.
+
+우리가 브라우저로 요청했기 때문에, 요청의 포맷은 `text/html` 로 결정되었습니다. 따라서 Rails는 HTML 템플릿을 찾게됩니다.
+
+이 경우에 응답해 줄 수 있는 가장 간단한 템플릿의 위치는 `app/views/articles/new.html.erb` 입니다. 파일의 확장자는 매우 중요합니다. 첫번째 확장자는 이 템플릿의 포맷을 의미하고, 두번째 확장자는 이 템플릿을 렌더하는데 사용될 핸들러를 결정합니다.
+
+Rails는 `articles/new` 라는 템플릿을 `app/views` 에서 찾게됩니다. 이 포맷은 `html` 형식만 될 수 있으며, HTML 의 기본 핸들러는 `erb` 입니다. Rails는 다른 핸들러를 다른 포맷에 사용할 수 있습니다. `builder` 핸들러는 XML 템플릿을 빌드하는데 사용되고, `coffee` 핸들러는 CoffeeScript를 사용해 자바스크립트 템플릿을 빌드하는데 사용됩니다. `ERB` 는 HTML에 Ruby를 내장해서 사용할 수 있게끔 디자인 된 언어입니다. 이를 사용해 새로운 HTML 폼을 만들 수 있습니다.
+
+따라서 우리가 만들 파일은 `articles/new.html.erb` 가 됩니다. 그리고 이 파일은 `app/views` 디렉토리 안에 있어야 합니다.
+
+새로운 파일을 `app/views/articles/new.html.erb` 로 작성하세요. 그리고 다음 내용을 작성하세요.
+
+```erb
+<h1>New Article</h1>
+```
+
+이제 새로고침 해봅시다. 이제 페이지가 정상적으로 나오는 것을 확인할 수 있습니다.
+
+루트, 컨트롤러, 액션, 뷰가 이제 조화롭게 동작합니다! 이제 새로운 기사를 작성하기 위한 폼을 만들어야 할 때입니다.
+
 ## References
 
 [Ruby On Rails Refernce Document](https://guides.rubyonrails.org/getting_started.html)
